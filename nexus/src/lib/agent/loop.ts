@@ -104,6 +104,14 @@ async function act(action: AgentAction, portfolio: PortfolioState): Promise<{ st
     });
     return { status: "success" };
   }
+  // Log SKIP actions too so dashboard always has data
+  await db.insert(schema.agentActions).values({
+    actionType: action.type === "SKIP" ? "SKIP" : action.type,
+    reason: action.reason,
+    amount: parseFloat(action.amount || "0"),
+    status: "skipped",
+    confidence: action.confidence,
+  });
   return { status: "skipped", reason: "Unknown action type" };
 }
 
