@@ -40,3 +40,14 @@ next-env.d.ts
 .env.local
 nexus.db
 nexus.db-journal
+nexus.db-shm
+nexus.db-wal
+
+# internal
+docs/
+nexus/
+.claude/
+
+# foundry
+contracts/out/
+contracts/cache/
