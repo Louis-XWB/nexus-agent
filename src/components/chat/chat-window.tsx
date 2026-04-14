@@ -5,7 +5,7 @@ import { MessageBubble } from "./message-bubble";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, Bot, Sparkles, ArrowRight } from "lucide-react";
+import { Send, Bot } from "lucide-react";
 
 interface Message { role: "user" | "assistant"; content: string; toolCalls?: { name: string; input: unknown }[]; }
 
@@ -48,44 +48,22 @@ export function ChatWindow() {
     setIsLoading(false);
   }
 
-  const suggestions = [
-    "What tokens are trending?",
-    "Check my portfolio",
-    "What are whales buying?",
-  ];
-
   return (
-    <div className="flex flex-col h-[calc(100vh-8rem)]">
+    <div className="flex flex-col h-[calc(100vh-7rem)]">
       <ScrollArea className="flex-1 p-4">
-        <div className="space-y-4 max-w-3xl mx-auto">
+        <div className="space-y-4 max-w-2xl mx-auto">
           {messages.length === 0 && (
-            <div className="text-center py-16 animate-fade-in">
-              {/* Gradient logo */}
-              <div className="relative inline-flex mb-6">
-                <div className="h-20 w-20 rounded-3xl bg-gradient-to-br from-blue-500 via-purple-500 to-blue-600 flex items-center justify-center shadow-2xl shadow-blue-500/20">
-                  <Bot className="h-10 w-10 text-white" />
-                </div>
-                <div className="absolute inset-0 h-20 w-20 rounded-3xl bg-gradient-to-br from-blue-500 via-purple-500 to-blue-600 opacity-30 blur-2xl" />
-                <div className="absolute -top-1 -right-1 h-6 w-6 rounded-full bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/30">
-                  <Sparkles className="h-3 w-3 text-white" />
-                </div>
+            <div className="text-center py-20">
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary mb-4">
+                <Bot className="h-6 w-6 text-primary-foreground" />
               </div>
-
-              <h2 className="text-2xl font-bold text-gradient mb-2">Chat with Nexus</h2>
-              <p className="text-sm text-slate-500 mb-8 max-w-sm mx-auto">
-                Your autonomous DeFi agent. Ask about tokens, execute trades, or analyze your portfolio.
-              </p>
-
-              {/* Suggestion chips */}
+              <h2 className="text-lg font-semibold mb-1">Chat with Nexus</h2>
+              <p className="text-sm text-muted-foreground mb-6">Ask about tokens, execute trades, check your portfolio</p>
               <div className="flex flex-wrap gap-2 justify-center">
-                {suggestions.map((q) => (
-                  <button
-                    key={q}
-                    onClick={() => setInput(q)}
-                    className="group glass-subtle rounded-2xl px-4 py-2.5 text-sm text-slate-400 hover:text-slate-200 hover:border-blue-500/20 hover:shadow-[0_0_20px_rgba(59,130,246,0.08)] transition-all flex items-center gap-2"
-                  >
+                {["What tokens are trending?", "Check my portfolio", "What are whales buying?"].map((q) => (
+                  <button key={q} onClick={() => setInput(q)}
+                    className="rounded-md border border-border bg-secondary/50 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary">
                     {q}
-                    <ArrowRight className="h-3.5 w-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-blue-400" />
                   </button>
                 ))}
               </div>
@@ -97,25 +75,12 @@ export function ChatWindow() {
         </div>
       </ScrollArea>
 
-      {/* Input area */}
-      <div className="p-4">
-        <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="max-w-3xl mx-auto">
-          <div className="glass rounded-2xl p-1.5 flex items-center gap-2 shadow-[inset_0_1px_1px_rgba(148,163,184,0.05),0_0_30px_rgba(59,130,246,0.03)]">
-            <Input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask Nexus anything..."
-              disabled={isLoading}
-              className="flex-1 border-0 bg-transparent text-slate-200 placeholder:text-slate-600 focus-visible:ring-0 focus-visible:ring-offset-0 text-sm h-11 px-4"
-            />
-            <Button
-              type="submit"
-              disabled={isLoading || !input.trim()}
-              className="h-9 w-9 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-400 hover:to-purple-500 border-0 shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 transition-all disabled:opacity-30 disabled:shadow-none flex items-center justify-center p-0"
-            >
-              <Send className="h-4 w-4 text-white" />
-            </Button>
-          </div>
+      <div className="border-t border-border p-4">
+        <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="flex gap-2 max-w-2xl mx-auto">
+          <Input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Ask Nexus anything..." disabled={isLoading} className="flex-1" />
+          <Button type="submit" disabled={isLoading || !input.trim()} className="bg-primary hover:bg-primary/90">
+            <Send className="h-4 w-4" />
+          </Button>
         </form>
       </div>
     </div>

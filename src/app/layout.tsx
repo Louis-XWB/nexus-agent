@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="dark">
       <body className="min-h-screen bg-background antialiased">
         <Sidebar />
-        <main className="pl-[260px]"><div className="max-w-7xl mx-auto px-6 py-6">{children}</div></main>
+        <main className="pl-[240px]"><div className="max-w-7xl mx-auto px-5 py-5">{children}</div></main>
       </body>
     </html>
   );
