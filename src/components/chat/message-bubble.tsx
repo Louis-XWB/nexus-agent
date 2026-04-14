@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Bot, User, Zap } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 interface MessageBubbleProps { role: "user" | "assistant"; content: string; toolCalls?: { name: string; input: unknown }[]; isStreaming?: boolean; }
 
@@ -10,10 +11,8 @@ export function MessageBubble({ role, content, toolCalls, isStreaming }: Message
         role === "user" ? "bg-foreground" : "bg-gradient-to-br from-pink-500 to-violet-500 shadow-pink-500/15")}>
         {role === "user" ? <User className="h-4 w-4 text-background" /> : <Bot className="h-4 w-4 text-white" />}
       </div>
-      <div className={cn("max-w-[75%] rounded-2xl px-4 py-3",
-        role === "user"
-          ? "bg-foreground text-background"
-          : "card-elevated")}>
+      <div className={cn("max-w-[80%] rounded-2xl px-4 py-3",
+        role === "user" ? "bg-foreground text-background" : "card-elevated")}>
         {toolCalls && toolCalls.length > 0 && (
           <div className="mb-2.5 space-y-1">
             {toolCalls.map((tc, i) => (
@@ -24,7 +23,14 @@ export function MessageBubble({ role, content, toolCalls, isStreaming }: Message
             ))}
           </div>
         )}
-        <div className="text-[13px] whitespace-pre-wrap leading-relaxed">{content}</div>
+        <div className="text-[13px] leading-relaxed prose prose-sm prose-neutral max-w-none
+          prose-p:my-1 prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5
+          prose-strong:font-semibold prose-code:text-pink-500 prose-code:bg-pink-50 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-[12px] prose-code:before:content-none prose-code:after:content-none
+          prose-pre:bg-[#f7f7fa] prose-pre:rounded-xl prose-pre:text-[12px]
+          prose-headings:font-semibold prose-h1:text-base prose-h2:text-sm prose-h3:text-[13px]
+          prose-a:text-pink-500 prose-a:no-underline hover:prose-a:underline">
+          <ReactMarkdown>{content}</ReactMarkdown>
+        </div>
         {isStreaming && <span className="inline-block w-1.5 h-4 bg-foreground/20 animate-pulse ml-0.5 rounded-sm" />}
       </div>
     </div>

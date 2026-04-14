@@ -16,19 +16,26 @@ export function Sidebar() {
   const pathname = usePathname();
   return (
     <aside className="fixed left-0 top-0 z-40 h-screen w-[240px] bg-white border-r border-black/[0.04]">
-      <div className="flex h-16 items-center gap-3 px-5">
-        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-500 via-rose-500 to-violet-500 shadow-lg shadow-pink-500/20">
-          <Bot className="h-5 w-5 text-white" />
+      {/* Logo area - taller, more breathing room */}
+      <div className="px-5 pt-6 pb-5">
+        <div className="flex items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-500 via-rose-500 to-violet-500 shadow-lg shadow-pink-500/20">
+            <Bot className="h-5 w-5 text-white" />
+          </div>
+          <div>
+            <span className="text-[16px] font-bold tracking-tight block leading-tight">Nexus</span>
+            <span className="text-[11px] text-muted-foreground">Autonomous DeFi Agent</span>
+          </div>
         </div>
-        <div>
-          <span className="text-[15px] font-bold tracking-tight block leading-tight">Nexus</span>
-          <span className="text-[10px] text-muted-foreground font-medium">DeFi Agent</span>
-        </div>
+        <p className="text-[11px] text-muted-foreground mt-3 leading-relaxed">
+          AI-powered trading, intelligence, and portfolio management on X Layer.
+        </p>
       </div>
 
-      <div className="mx-5 h-px bg-black/[0.04]" />
+      <div className="mx-5 h-px bg-black/[0.05]" />
 
-      <nav className="px-3 mt-5 space-y-1.5">
+      {/* Nav - pushed down with more spacing */}
+      <nav className="px-3 mt-6 space-y-1">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           return (

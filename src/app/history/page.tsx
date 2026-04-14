@@ -43,16 +43,16 @@ export default function HistoryPage() {
           <TableBody>
             {actions.map((a) => (
               <TableRow key={a.id} className="hover:bg-[#fafafa] border-b border-black/[0.03]">
-                <TableCell className="text-xs text-muted-foreground font-mono">{new Date(a.createdAt).toLocaleString()}</TableCell>
-                <TableCell><Badge className={cn("text-[11px] font-semibold border-0 rounded-lg", typeColors[a.actionType] || "bg-gray-50 text-gray-700")}>{a.actionType}</Badge></TableCell>
-                <TableCell className="max-w-xs">
+                <TableCell className="text-xs text-muted-foreground font-mono py-4">{new Date(a.createdAt).toLocaleString()}</TableCell>
+                <TableCell className="py-4"><Badge className={cn("text-[11px] font-semibold border-0 rounded-lg", typeColors[a.actionType] || "bg-gray-50 text-gray-700")}>{a.actionType}</Badge></TableCell>
+                <TableCell className="max-w-xs py-4">
                   <p className="text-[13px] truncate">{a.reason}</p>
-                  {a.txHash && <a href={`https://www.oklink.com/x-layer/tx/${a.txHash}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-pink-500 hover:underline font-mono mt-0.5">{shortenTxHash(a.txHash)} <ExternalLink className="h-2.5 w-2.5" /></a>}
+                  {a.txHash && <a href={`https://www.oklink.com/x-layer/tx/${a.txHash}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-pink-500 hover:underline font-mono mt-1">{shortenTxHash(a.txHash)} <ExternalLink className="h-2.5 w-2.5" /></a>}
                 </TableCell>
-                <TableCell>{a.route && <Badge variant="secondary" className="text-[10px] font-mono rounded-lg">{a.route}</Badge>}</TableCell>
-                <TableCell><Badge className={cn("text-[11px] font-semibold border-0 rounded-lg", statusColors[a.status] || "bg-gray-50 text-gray-700")}>{a.status}</Badge></TableCell>
-                <TableCell className="text-right font-mono text-[13px]">{a.amount ? formatUSD(a.amount) : "–"}</TableCell>
-                <TableCell className={cn("text-right font-mono text-[13px] font-semibold", (a.pnl ?? 0) > 0 && "text-emerald-600", (a.pnl ?? 0) < 0 && "text-red-500")}>{a.pnl ? formatUSD(a.pnl) : "–"}</TableCell>
+                <TableCell className="py-4">{a.route && <Badge variant="secondary" className="text-[10px] font-mono rounded-lg">{a.route}</Badge>}</TableCell>
+                <TableCell className="py-4"><Badge className={cn("text-[11px] font-semibold border-0 rounded-lg", statusColors[a.status] || "bg-gray-50 text-gray-700")}>{a.status}</Badge></TableCell>
+                <TableCell className="text-right font-mono text-[13px] py-4">{a.amount ? formatUSD(a.amount) : "–"}</TableCell>
+                <TableCell className={cn("text-right font-mono text-[13px] font-semibold py-4", (a.pnl ?? 0) > 0 && "text-emerald-600", (a.pnl ?? 0) < 0 && "text-red-500")}>{a.pnl ? formatUSD(a.pnl) : "–"}</TableCell>
               </TableRow>
             ))}
             {actions.length === 0 && <TableRow><TableCell colSpan={7} className="text-center py-20 text-muted-foreground">No transactions yet</TableCell></TableRow>}
