@@ -2,7 +2,62 @@
 
 > Build X Hackathon Season 2 | X Layer Arena
 
-Nexus is an autonomous AI agent that operates a complete on-chain intelligence business on **X Layer**. It continuously analyzes market data, executes cross-DEX trades (OKX DEX + Uniswap), manages DeFi positions, and sells premium intelligence via **x402 micropayment APIs** — forming a self-sustaining **earn -> pay -> re-earn** economic loop.
+Nexus is an autonomous AI agent that operates a complete on-chain intelligence business on **X Layer**. It continuously analyzes market data, executes cross-DEX trades (OKX DEX + Uniswap), manages DeFi positions, and sells premium intelligence via **x402 micropayment APIs** -- forming a self-sustaining **earn -> pay -> re-earn** economic loop.
+
+## Why Nexus
+
+Traditional DeFi tools require users to manually monitor markets, compare prices across DEXes, assess token risks, and execute trades. Nexus automates this entire workflow with an AI agent that thinks, decides, and acts autonomously -- while giving users full transparency and control through a conversational interface.
+
+### Key Features
+
+**Autonomous Intelligence Engine**
+- Runs a continuous SENSE -> THINK -> ACT -> REPORT cycle every 30 minutes
+- Aggregates real-time data from whale trackers, smart money signals, trending tokens, and meme coin scanners
+- AI (Claude) analyzes market conditions and produces structured trading decisions with confidence scores
+- Every decision is logged with full reasoning -- no black box
+
+**Cross-DEX Smart Routing**
+- Every trade queries both **OKX DEX aggregator** (500+ liquidity sources) and **Uniswap** in parallel
+- Automatically selects the route with the best output amount, lowest slippage, and optimal gas cost
+- Typical savings: 5-15 basis points per trade vs single-DEX execution
+
+**x402 Intelligence Marketplace**
+- 5 paid API endpoints selling real-time on-chain intelligence via the x402 micropayment protocol
+- Any agent or developer can access trending tokens, whale movements, smart money signals, token risk scores, and cross-DEX route comparisons
+- Pay-per-query with USDT on X Layer -- no API keys, no subscriptions, no accounts needed
+- Nexus also **consumes** x402 services from other agents, creating a bidirectional agent economy
+
+**Built-in Safety Rails**
+- Max 10% of portfolio per trade -- prevents oversized positions
+- 20% stablecoin reserve floor -- always maintains liquidity buffer
+- Confidence threshold (60%) -- only executes high-conviction trades
+- Token risk scanner -- auto-rejects honeypots, rug pulls, and suspicious tokens (risk score > 70)
+- Pre-execution simulation on every transaction
+- Daily loss circuit breaker (5%) -- pauses trading when losses accumulate
+
+**Conversational Control**
+- Chat with the agent in natural language: "What's trending?", "Buy 50 USDC of WETH", "Is this token safe?"
+- The agent uses 13 specialized tools (OKX OnchainOS + Uniswap) behind the scenes
+- Every tool call is visible in the UI -- you see exactly what the agent is doing and why
+
+**Full-Stack Web Dashboard**
+- Real-time portfolio overview with P&L tracking
+- 7-day performance chart with daily breakdown
+- Asset allocation visualization
+- Live action feed showing every agent decision with reasoning
+- Transaction history with on-chain TX links
+- Intelligence marketplace with API documentation
+
+### Integration Depth
+
+| Metric | Value |
+|--------|-------|
+| OnchainOS Skills used | **13 / 13** (100% coverage) |
+| Uniswap Skills used | **3 / 3** core plugins |
+| DEX sources compared | **500+** (OKX aggregator) + Uniswap |
+| x402 endpoints | **5** paid + **1** consumer |
+| Safety checks per trade | **6** independent rules |
+| AI tools available | **13** Claude tool definitions |
 
 ## Architecture
 
