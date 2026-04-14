@@ -8,11 +8,11 @@ export function MessageBubble({ role, content, toolCalls, isStreaming }: Message
   return (
     <div className={cn("flex gap-3", role === "user" && "flex-row-reverse")}>
       <div className={cn("flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl shadow-sm",
-        role === "user" ? "bg-gradient-to-br from-pink-500 to-violet-500 shadow-pink-500/15" : "bg-gradient-to-br from-pink-500 to-violet-500 shadow-pink-500/15")}>
-        {role === "user" ? <User className="h-4 w-4 text-white" /> : <Bot className="h-4 w-4 text-white" />}
+        role === "user" ? "bg-foreground" : "bg-gradient-to-br from-pink-500 to-violet-500 shadow-pink-500/15")}>
+        {role === "user" ? <User className="h-4 w-4 text-background" /> : <Bot className="h-4 w-4 text-white" />}
       </div>
       <div className={cn("max-w-[80%] rounded-2xl px-4 py-3",
-        role === "user" ? "bg-gradient-to-r from-pink-500 to-violet-500 text-white" : "card-elevated")}>
+        role === "user" ? "bg-white border border-black/[0.06] shadow-sm" : "card-elevated")}>
 
         {toolCalls && toolCalls.length > 0 && (
           <div className="mb-2.5 space-y-1">

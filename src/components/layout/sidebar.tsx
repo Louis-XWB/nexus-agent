@@ -6,10 +6,10 @@ import { cn } from "@/lib/utils";
 import { LayoutDashboard, MessageSquare, Zap, History, Bot, Circle } from "lucide-react";
 
 const navItems = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/chat", label: "Chat", icon: MessageSquare },
-  { href: "/intel", label: "Intelligence", icon: Zap },
-  { href: "/history", label: "History", icon: History },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/dashboard/chat", label: "Chat", icon: MessageSquare },
+  { href: "/dashboard/intel", label: "Intelligence", icon: Zap },
+  { href: "/dashboard/history", label: "History", icon: History },
 ];
 
 export function Sidebar() {
