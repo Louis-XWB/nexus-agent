@@ -198,10 +198,44 @@ EARN                              PAY
 - Risk parameters stored on-chain for accountability
 - 10/10 Foundry tests passing
 
+## MCP Integration
+
+Nexus integrates with OnchainOS via MCP (Model Context Protocol), enabling any AI editor or agent framework to interact with the full Nexus + OnchainOS stack.
+
+### Setup MCP Server
+
+```bash
+# Install OnchainOS MCP server
+claude mcp add --scope user onchainos-cli onchainos mcp
+
+# Or via npx
+npx skills add okx/onchainos-skills
+```
+
+### MCP Configuration (claude_desktop_config.json)
+
+```json
+{
+  "mcpServers": {
+    "onchainos": {
+      "command": "onchainos",
+      "args": ["mcp"],
+      "env": {
+        "OKX_API_KEY": "your-api-key",
+        "OKX_SECRET_KEY": "your-secret-key",
+        "OKX_PASSPHRASE": "your-passphrase",
+        "OKX_PROJECT_ID": "your-project-id"
+      }
+    }
+  }
+}
+```
+
+This exposes all 13 OnchainOS skills (wallet, swap, market, signal, security, DeFi, x402, audit) as MCP tools that any compatible AI agent can call directly.
+
 ## Setup
 
 ```bash
-cd nexus
 npm install
 cp .env.example .env  # Fill in API keys
 npx drizzle-kit push
