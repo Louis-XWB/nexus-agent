@@ -40,8 +40,8 @@ Next.js 14 | TypeScript | Tailwind CSS + shadcn/ui | Claude API | SQLite + Drizz
 
 | Component | Address |
 |-----------|---------|
-| **NexusRegistry.sol** | `0x_DEPLOYED_ADDRESS` (X Layer Mainnet, Chain 196) |
-| **Agentic Wallet** | `0x_AGENT_WALLET` |
+| **NexusRegistry.sol** | [`0x3050BFe3a2fa1b4a8f47b1948DA7A0cB573e4B32`](https://www.oklink.com/x-layer/address/0x3050BFe3a2fa1b4a8f47b1948DA7A0cB573e4B32) (X Layer Mainnet, Chain 196) |
+| **Agentic Wallet** | [`0x9279F67389f5Fa920741B58Ebd13f8eff587687b`](https://www.oklink.com/x-layer/address/0x9279F67389f5Fa920741B58Ebd13f8eff587687b) |
 
 ## OnchainOS Skill Usage (13/13)
 
