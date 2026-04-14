@@ -12,15 +12,39 @@ async function isAutoTradingEnabled(): Promise<boolean> {
 }
 
 async function getPortfolioState(): Promise<PortfolioState> {
-  const accountId = process.env.OKX_ACCOUNT_ID || "";
-  const balances = await okx.wallet.getAllBalances(accountId);
-  const mapped = balances.map((b) => ({
-    symbol: b.symbol, address: b.tokenAddress, amount: parseFloat(b.balance), valueUSD: parseFloat(b.balance) * parseFloat(b.tokenPrice || "0"),
-  }));
+  const walletAddress = process.env.AGENT_WALLET_ADDRESS || "";
+
+  // Try OKX API first, fallback to RPC balance query
+  let mapped: { symbol: string; address: string; amount: number; valueUSD: number }[] = [];
+  try {
+    const accountId = process.env.OKX_ACCOUNT_ID;
+    if (accountId) {
+      const balances = await okx.wallet.getAllBalances(accountId);
+      mapped = balances.map((b) => ({
+        symbol: b.symbol, address: b.tokenAddress,
+        amount: parseFloat(b.balance), valueUSD: parseFloat(b.balance) * parseFloat(b.tokenPrice || "0"),
+      }));
+    }
+  } catch { /* fallback below */ }
+
+  // Fallback: query native OKB balance via RPC
+  if (mapped.length === 0 && walletAddress) {
+    try {
+      const res = await fetch(process.env.XLAYER_RPC_URL || "https://rpc.xlayer.tech", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", method: "eth_getBalance", params: [walletAddress, "latest"], id: 1 }),
+      });
+      const json = await res.json();
+      const balanceWei = parseInt(json.result || "0", 16);
+      const balanceOKB = balanceWei / 1e18;
+      mapped = [{ symbol: "OKB", address: "native", amount: balanceOKB, valueUSD: balanceOKB * 50 }]; // ~$50/OKB estimate
+    } catch { /* empty portfolio */ }
+  }
+
   const totalValueUSD = mapped.reduce((sum, b) => sum + b.valueUSD, 0);
   let defiPositions: { protocol: string; valueUSD: number }[] = [];
   try {
-    const positions = await okx.defi.getUserDeFiPositions(process.env.AGENT_WALLET_ADDRESS || "");
+    const positions = await okx.defi.getUserDeFiPositions(walletAddress);
     defiPositions = Array.isArray(positions) ? positions.map((p) => {
       const pos = p as { platformName?: string; totalValue?: string };
       return { protocol: pos.platformName || "unknown", valueUSD: parseFloat(pos.totalValue || "0") };
