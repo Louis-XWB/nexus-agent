@@ -4,6 +4,18 @@
 
 Nexus is an autonomous AI agent that operates a complete on-chain intelligence business on **X Layer**. It continuously analyzes market data, executes cross-DEX trades (OKX DEX + Uniswap), manages DeFi positions, and sells premium intelligence via **x402 micropayment APIs** -- forming a self-sustaining **earn -> pay -> re-earn** economic loop.
 
+**Live App:** https://xlayer-two.vercel.app
+
+**Demo Video:** https://youtu.be/8oxvLUL-qmo
+
+**Verified On-Chain:**
+- [NexusRegistry Contract](https://www.oklink.com/x-layer/address/0x3050BFe3a2fa1b4a8f47b1948DA7A0cB573e4B32) -- `0x3050BFe3a2fa1b4a8f47b1948DA7A0cB573e4B32`
+- [Agent Wallet](https://www.oklink.com/x-layer/address/0x9279F67389f5Fa920741B58Ebd13f8eff587687b) -- `0x9279F67389f5Fa920741B58Ebd13f8eff587687b`
+
+![Landing Page](public/screenshots/landing.png)
+
+![Dashboard](public/screenshots/dashboard.png)
+
 ## Why Nexus
 
 Traditional DeFi tools require users to manually monitor markets, compare prices across DEXes, assess token risks, and execute trades. Nexus automates this entire workflow with an AI agent that thinks, decides, and acts autonomously -- while giving users full transparency and control through a conversational interface.
