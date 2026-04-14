@@ -3,7 +3,9 @@ import Anthropic from "@anthropic-ai/sdk";
 import { TOOLS, executeTool } from "@/lib/agent/tools";
 import { db, schema } from "@/lib/db";
 
-const anthropic = new Anthropic();
+const anthropic = new Anthropic({
+  baseURL: process.env.ANTHROPIC_BASE_URL || undefined,
+});
 
 const CHAT_SYSTEM = `You are Nexus, an autonomous AI trading and intelligence agent operating on X Layer (OKX's Ethereum L2).
 

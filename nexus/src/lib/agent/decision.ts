@@ -1,7 +1,9 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { AgentDecision } from "./types";
 
-const anthropic = new Anthropic();
+const anthropic = new Anthropic({
+  baseURL: process.env.ANTHROPIC_BASE_URL || undefined,
+});
 
 const DECISION_SYSTEM_PROMPT = `You are Nexus, an autonomous AI trading agent operating on X Layer.
 You analyze market data and make trading/DeFi decisions.
