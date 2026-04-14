@@ -34,10 +34,10 @@ export function Sidebar() {
           return (
             <Link key={item.href} href={item.href}
               className={cn(
-                "flex items-center gap-3 rounded-2xl px-4 py-3.5 text-[14px] tracking-[-0.01em] transition-all",
+                "flex items-center gap-3 rounded-lg px-4 py-3 text-[14px] tracking-[-0.01em] transition-all",
                 isActive
-                  ? "bg-[#f0f0f5] text-foreground font-semibold shadow-sm shadow-black/[0.03] border border-black/[0.03]"
-                  : "text-foreground/45 font-normal hover:text-foreground/70 hover:bg-[#f8f8fb]"
+                  ? "bg-[#f0f0f5] text-foreground font-semibold"
+                  : "text-foreground/40 font-normal hover:text-foreground/70 hover:bg-[#fafafc]"
               )}>
               <item.icon className={cn("h-[18px] w-[18px]", isActive ? "text-foreground/70" : "text-foreground/25")} />
               {item.label}
