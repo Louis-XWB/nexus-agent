@@ -1,36 +1,200 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nexus - Autonomous On-Chain AI Intelligence Agent
 
-## Getting Started
+> Build X Hackathon Season 2 | X Layer Arena
 
-First, run the development server:
+Nexus is an autonomous AI agent that operates a complete on-chain intelligence business on **X Layer**. It continuously analyzes market data, executes cross-DEX trades (OKX DEX + Uniswap), manages DeFi positions, and sells premium intelligence via **x402 micropayment APIs** — forming a self-sustaining **earn -> pay -> re-earn** economic loop.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Architecture
+
+```
+User <-> [Web UI: Chat + Dashboard]
+              |
+         [AI Agent Core (Claude API + Tool Calling)]
+         +--------+--------+-----------+
+         |        |        |           |
+         v        v        v           v
+    Intelligence  Trading   DeFi     x402 Service
+    Engine        Engine    Manager  Layer
+         |        |        |           |
+         +--------+--------+-----------+
+              |
+    [OnchainOS REST API + Uniswap Trading API]
+              |
+         [X Layer (Chain ID 196)]
+         Agentic Wallet + NexusRegistry.sol
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Operating Modes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Mode | Trigger | Description |
+|------|---------|-------------|
+| **Passive** | User chat | Natural language commands for trading, analysis, portfolio |
+| **Autonomous** | Every 30 min | SENSE -> THINK -> ACT -> REPORT cycle |
+| **Service** | HTTP request | x402 micropayment intelligence APIs |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Tech Stack
 
-## Learn More
+Next.js 14 | TypeScript | Tailwind CSS + shadcn/ui | Claude API | SQLite + Drizzle ORM | viem | OKX OnchainOS API | Uniswap Trading API | x402 Protocol | Foundry (Solidity)
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Component | Address |
+|-----------|---------|
+| **NexusRegistry.sol** | `0x_DEPLOYED_ADDRESS` (X Layer Mainnet, Chain 196) |
+| **Agentic Wallet** | `0x_AGENT_WALLET` |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## OnchainOS Skill Usage (13/13)
 
-## Deploy on Vercel
+| # | Skill | Usage in Nexus |
+|---|-------|---------------|
+| 1 | `okx-agentic-wallet` | Wallet lifecycle, balance queries, transaction signing |
+| 2 | `okx-wallet-portfolio` | Portfolio valuation for dashboard and safety checks |
+| 3 | `okx-security` | Token risk assessment, pre-trade security scanning (risk score 0-100) |
+| 4 | `okx-dex-market` | Real-time pricing, candlestick data for market analysis |
+| 5 | `okx-dex-signal` | Whale tracking, smart money signals, KOL monitoring |
+| 6 | `okx-dex-trenches` | Meme token detection, dev reputation scoring, bundle detection |
+| 7 | `okx-dex-swap` | Cross-DEX swap execution via 500+ DEX aggregation |
+| 8 | `okx-dex-token` | Token discovery, trending tokens, holder analysis |
+| 9 | `okx-onchain-gateway` | Gas estimation, transaction simulation, broadcasting |
+| 10 | `okx-x402-payment` | x402 payment authorization for agent-as-consumer |
+| 11 | `okx-defi-invest` | DeFi protocol deposits, withdrawals, reward claims |
+| 12 | `okx-defi-portfolio` | Cross-protocol DeFi position monitoring |
+| 13 | `okx-audit-log` | Audit trail export for transparency and compliance |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Uniswap Skill Usage (3/3 core plugins)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Skill | Usage in Nexus |
+|-------|---------------|
+| `swap-integration` | Execute swaps on Uniswap, compared with OKX DEX for best route |
+| `pay-with-any-token` | x402 payments auto-swap any token to required payment token |
+| `swap-planner` | Plan optimal routes, estimate prices, compare across DEXes |
+
+## How It Works
+
+### Autonomous Agent Loop (every 30 minutes)
+
+```
+PHASE 1: SENSE
+  Fetch trending tokens, whale signals, smart money, portfolio state
+  (okx-dex-token, okx-dex-signal, okx-wallet-portfolio, okx-defi-portfolio)
+
+PHASE 2: THINK
+  Claude AI analyzes all data -> structured action plan with confidence scores
+  Each action includes: type, reason, confidence (0-1), token, amount
+
+PHASE 3: ACT
+  For each action:
+  1. Security scan (okx-security) -> reject if risk > 70
+  2. Cross-DEX route comparison: OKX DEX vs Uniswap -> pick best
+  3. Transaction simulation (okx-onchain-gateway)
+  4. Execute via winning route
+  5. Log action on-chain (NexusRegistry.logAction)
+
+PHASE 4: REPORT
+  Record decisions -> update x402 API cache -> push to dashboard
+```
+
+### Cross-DEX Route Comparison
+
+Every trade queries both **OKX DEX aggregator** (500+ liquidity sources) and **Uniswap Trading API** in parallel. The agent compares output amount, gas cost, and price impact, then selects the optimal route. This dual-DEX comparison happens on every single trade.
+
+### x402 Intelligence Market
+
+Nexus sells real-time on-chain intelligence via x402 micropayments -- no API keys, no subscriptions:
+
+| Endpoint | Price | Data |
+|----------|-------|------|
+| `GET /api/intel/trending` | $0.01 | Top 20 trending tokens (price, volume, holders) |
+| `GET /api/intel/whale-moves` | $0.02 | Whale transactions >$100K |
+| `GET /api/intel/smart-money` | $0.05 | Smart money portfolio changes + top traders |
+| `GET /api/intel/token-risk/:address` | $0.01 | Token security score + risk breakdown |
+| `GET /api/intel/best-route?from=&to=&amount=` | $0.03 | Cross-DEX route comparison report |
+
+Nexus also **consumes** x402 services (agent-as-consumer), creating bidirectional x402 usage.
+
+### Economic Loop
+
+```
+EARN                              PAY
+|- x402 intel API sales           |- Trading capital reinvestment
+|- DeFi yield (Aave, etc.)       |- External x402 data purchases
+|- Trading profits
+         |                              |
+         v                              v
+    AI Capital Allocation --> Better decisions --> More earnings
+```
+
+### Safety Rails
+
+| Rule | Threshold |
+|------|-----------|
+| Max trade size | 10% of portfolio per trade |
+| Reserve floor | Always keep 20% in stablecoins |
+| Confidence threshold | Skip if < 60% |
+| Token risk cap | Reject if risk score > 70 |
+| Pre-execution simulation | Every trade simulated first |
+| Daily loss limit | Pause if daily loss > 5% |
+
+## Smart Contract
+
+**NexusRegistry.sol** deployed on X Layer provides:
+- On-chain agent identity and configuration
+- Immutable action log (SWAP, DEFI, SKIP, x402_EARN events)
+- Risk parameters stored on-chain for accountability
+- 10/10 Foundry tests passing
+
+## Setup
+
+```bash
+cd nexus
+npm install
+cp .env.example .env  # Fill in API keys
+npx drizzle-kit push
+npm run dev
+```
+
+### Deploy Smart Contract
+
+```bash
+cd contracts
+forge build
+forge create --rpc-url https://rpc.xlayer.tech \
+  --private-key $AGENT_PRIVATE_KEY \
+  src/NexusRegistry.sol:NexusRegistry \
+  --constructor-args $AGENT_WALLET_ADDRESS
+```
+
+### Run Tests
+
+```bash
+npx vitest run          # Safety rail tests (9/9)
+cd contracts && forge test -v  # Contract tests (10/10)
+```
+
+## Frontend
+
+| Page | Description |
+|------|-------------|
+| **Dashboard** (`/`) | Portfolio stats, P&L, x402 revenue, DeFi yield, live action feed |
+| **Chat** (`/chat`) | Natural language interaction with streaming responses and tool calls |
+| **Intelligence** (`/intel`) | x402 API marketplace with docs, curl examples, live try-it |
+| **History** (`/history`) | Full transaction log with reasoning, routes, and on-chain TX links |
+
+## X Layer Ecosystem Position
+
+Nexus demonstrates the full power of the X Layer ecosystem:
+
+- **Zero-gas Agentic Wallet** operations for high-frequency autonomous trading
+- **13/13 OnchainOS skill coverage** -- the most comprehensive integration possible
+- **Cross-DEX intelligence** comparing OKX DEX (500+ DEXes) and Uniswap on X Layer
+- **x402 data marketplace** creating a new revenue model for AI agents on X Layer
+- **Real transaction volume** driving X Layer adoption through autonomous agent activity
+- **On-chain transparency** via NexusRegistry contract with full audit trail
+
+## Team
+
+Solo developer
+
+## License
+
+MIT
