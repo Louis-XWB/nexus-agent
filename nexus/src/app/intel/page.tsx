@@ -16,6 +16,9 @@ import {
   CircleDollarSign,
   Lock,
   ExternalLink,
+  Loader2,
+  ShieldAlert,
+  CheckCircle2,
 } from "lucide-react";
 
 const endpoints = [
@@ -84,11 +87,23 @@ const endpoints = [
 export default function IntelPage() {
   const [copied, setCopied] = useState<string | null>(null);
   const [selectedEndpoint, setSelectedEndpoint] = useState<string | null>(null);
+  const [tryResult, setTryResult] = useState<Record<string, { status: number; loading: boolean }>>({});
 
   function handleCopy(text: string, id: string) {
     navigator.clipboard.writeText(text);
     setCopied(id);
     setTimeout(() => setCopied(null), 2000);
+  }
+
+  async function handleTryIt(ep: typeof endpoints[0]) {
+    setTryResult((prev) => ({ ...prev, [ep.id]: { status: 0, loading: true } }));
+    try {
+      const path = ep.path.replace(":address", "0x0000000000000000000000000000000000000000");
+      const res = await fetch(path);
+      setTryResult((prev) => ({ ...prev, [ep.id]: { status: res.status, loading: false } }));
+    } catch {
+      setTryResult((prev) => ({ ...prev, [ep.id]: { status: 500, loading: false } }));
+    }
   }
 
   return (
@@ -255,6 +270,45 @@ export default function IntelPage() {
                             <span className="text-muted-foreground">Scheme</span>
                             <span>exact (EIP-3009)</span>
                           </div>
+                        </div>
+                      </div>
+
+                      {/* Try It */}
+                      <div>
+                        <div className="flex items-center gap-3">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-xs"
+                            disabled={tryResult[ep.id]?.loading}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleTryIt(ep);
+                            }}
+                          >
+                            {tryResult[ep.id]?.loading ? (
+                              <><Loader2 className="h-3 w-3 mr-1.5 animate-spin" />Calling...</>
+                            ) : (
+                              <><Zap className="h-3 w-3 mr-1.5" />Try without payment</>
+                            )}
+                          </Button>
+                          {tryResult[ep.id] && !tryResult[ep.id].loading && (
+                            <div className={`flex items-center gap-2 text-xs px-3 py-1.5 rounded-md ${
+                              tryResult[ep.id].status === 402
+                                ? "bg-amber-500/10 text-amber-400"
+                                : tryResult[ep.id].status === 200
+                                  ? "bg-green-500/10 text-green-400"
+                                  : "bg-red-500/10 text-red-400"
+                            }`}>
+                              {tryResult[ep.id].status === 402 ? (
+                                <><ShieldAlert className="h-3.5 w-3.5" />HTTP 402 — Payment required. x402 is working!</>
+                              ) : tryResult[ep.id].status === 200 ? (
+                                <><CheckCircle2 className="h-3.5 w-3.5" />HTTP 200 — Data returned</>
+                              ) : (
+                                <>HTTP {tryResult[ep.id].status} — Error</>
+                              )}
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
