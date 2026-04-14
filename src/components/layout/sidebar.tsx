@@ -28,18 +28,18 @@ export function Sidebar() {
 
       <div className="mx-5 h-px bg-black/[0.04]" />
 
-      <nav className="px-3 mt-5 space-y-0.5">
+      <nav className="px-3 mt-5 space-y-1.5">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link key={item.href} href={item.href}
               className={cn(
-                "flex items-center gap-3 rounded-xl px-3 py-2.5 text-[14px] tracking-[-0.01em] transition-all",
+                "flex items-center gap-3 rounded-2xl px-4 py-3.5 text-[14px] tracking-[-0.01em] transition-all",
                 isActive
-                  ? "bg-foreground text-white font-medium shadow-md shadow-black/10"
-                  : "text-foreground/50 font-normal hover:text-foreground/80 hover:bg-black/[0.02]"
+                  ? "bg-[#f0f0f5] text-foreground font-semibold shadow-sm shadow-black/[0.03] border border-black/[0.03]"
+                  : "text-foreground/45 font-normal hover:text-foreground/70 hover:bg-[#f8f8fb]"
               )}>
-              <item.icon className={cn("h-[18px] w-[18px]", isActive ? "text-white/80" : "text-foreground/30")} />
+              <item.icon className={cn("h-[18px] w-[18px]", isActive ? "text-foreground/70" : "text-foreground/25")} />
               {item.label}
             </Link>
           );
@@ -48,14 +48,12 @@ export function Sidebar() {
 
       <div className="absolute bottom-4 left-3 right-3">
         <div className="card-colored bg-gradient-to-br from-emerald-50 via-teal-50 to-emerald-50/50 px-4 py-3.5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-xs font-bold text-emerald-700">
-              <div className="relative">
-                <Circle className="h-2 w-2 fill-emerald-500 text-emerald-500" />
-                <Circle className="absolute inset-0 h-2 w-2 fill-emerald-500 text-emerald-500 animate-ping opacity-30" />
-              </div>
-              Agent Running
+          <div className="flex items-center gap-2 text-xs font-bold text-emerald-700">
+            <div className="relative">
+              <Circle className="h-2 w-2 fill-emerald-500 text-emerald-500" />
+              <Circle className="absolute inset-0 h-2 w-2 fill-emerald-500 text-emerald-500 animate-ping opacity-30" />
             </div>
+            Agent Running
           </div>
           <p className="text-[11px] text-emerald-600/50 mt-1 font-mono">X Layer / Chain 196</p>
         </div>

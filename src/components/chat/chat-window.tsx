@@ -47,19 +47,21 @@ export function ChatWindow() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-7rem)]">
-      <ScrollArea className="flex-1 p-4">
-        <div className="space-y-4 max-w-2xl mx-auto">
+      <ScrollArea className="flex-1 p-6">
+        <div className="space-y-5 max-w-2xl mx-auto">
           {messages.length === 0 && (
-            <div className="text-center py-20">
-              <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-500 to-violet-500 mb-5">
-                <Bot className="h-7 w-7 text-white" />
+            <div className="text-center py-16">
+              <div className="card-elevated inline-flex p-5 rounded-3xl mb-6">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-500 via-rose-500 to-violet-500 shadow-lg shadow-pink-500/20">
+                  <Bot className="h-7 w-7 text-white" />
+                </div>
               </div>
-              <h2 className="text-xl font-semibold mb-1">Chat with Nexus</h2>
+              <h2 className="text-xl font-bold tracking-tight mb-1.5">Chat with Nexus</h2>
               <p className="text-sm text-muted-foreground mb-8">Ask about tokens, execute trades, check your portfolio</p>
-              <div className="flex flex-wrap gap-2 justify-center">
+              <div className="flex flex-wrap gap-2.5 justify-center">
                 {["What tokens are trending?", "Check my portfolio", "What are whales buying?"].map((q) => (
                   <button key={q} onClick={() => setInput(q)}
-                    className="rounded-full border border-border bg-white px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:border-foreground/20 hover:shadow-sm">
+                    className="card-elevated px-4 py-2.5 text-[13px] text-muted-foreground hover:text-foreground cursor-pointer">
                     {q}
                   </button>
                 ))}
@@ -71,12 +73,16 @@ export function ChatWindow() {
           <div ref={scrollRef} />
         </div>
       </ScrollArea>
-      <div className="border-t border-border p-4">
-        <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="flex gap-2 max-w-2xl mx-auto">
-          <Input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Ask Nexus anything..." disabled={isLoading} className="flex-1 rounded-full h-10 px-4" />
-          <Button type="submit" disabled={isLoading || !input.trim()} className="rounded-full h-10 w-10 p-0 bg-gradient-to-r from-pink-500 to-violet-500 hover:from-pink-600 hover:to-violet-600">
-            <Send className="h-4 w-4 text-white" />
-          </Button>
+      <div className="px-6 pb-6">
+        <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="max-w-2xl mx-auto">
+          <div className="card-elevated flex items-center gap-2 px-4 py-2">
+            <Input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Ask Nexus anything..." disabled={isLoading}
+              className="flex-1 border-0 bg-transparent shadow-none focus-visible:ring-0 text-[14px] h-10 px-0" />
+            <Button type="submit" disabled={isLoading || !input.trim()} size="sm"
+              className="rounded-xl h-9 px-4 bg-gradient-to-r from-pink-500 to-violet-500 hover:from-pink-600 hover:to-violet-600 shadow-md shadow-pink-500/15 text-white border-0">
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
         </form>
       </div>
     </div>
