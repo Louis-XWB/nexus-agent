@@ -1,7 +1,9 @@
-import Database from "better-sqlite3";
+import { createClient } from "@libsql/client";
 
-const db = new Database(process.env.DATABASE_PATH || "./nexus.db");
-db.pragma("journal_mode = WAL");
+const client = createClient({
+  url: process.env.TURSO_DATABASE_URL || "file:./nexus.db",
+  authToken: process.env.TURSO_AUTH_TOKEN,
+});
 
 const now = Date.now();
 const hour = 3600000;
@@ -27,25 +29,22 @@ const x402txs = [
   { endpoint: "/api/intel/smart-money", payer: "0xabc5...def5", amount: "0.05", status: "settled", time: now - 1 * hour },
 ];
 
-// Insert actions
-const insertAction = db.prepare(`
-  INSERT INTO agent_actions (action_type, reason, amount, token_from, token_to, status, confidence, route, pnl, created_at)
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-`);
+async function main() {
+  for (const a of actions) {
+    await client.execute({
+      sql: "INSERT INTO agent_actions (action_type, reason, amount, token_from, token_to, status, confidence, route, pnl, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      args: [a.type, a.reason, a.amount, a.from, a.to, a.status, a.confidence, a.route, a.pnl, Math.floor(a.time / 1000)],
+    });
+  }
 
-for (const a of actions) {
-  insertAction.run(a.type, a.reason, a.amount, a.from, a.to, a.status, a.confidence, a.route, a.pnl, Math.floor(a.time / 1000));
+  for (const t of x402txs) {
+    await client.execute({
+      sql: "INSERT INTO x402_transactions (endpoint, payer_address, amount, status, created_at) VALUES (?, ?, ?, ?, ?)",
+      args: [t.endpoint, t.payer, t.amount, t.status, Math.floor(t.time / 1000)],
+    });
+  }
+
+  console.log(`Seeded ${actions.length} agent actions and ${x402txs.length} x402 transactions`);
 }
 
-// Insert x402 transactions
-const insertX402 = db.prepare(`
-  INSERT INTO x402_transactions (endpoint, payer_address, amount, status, created_at)
-  VALUES (?, ?, ?, ?, ?)
-`);
-
-for (const t of x402txs) {
-  insertX402.run(t.endpoint, t.payer, t.amount, t.status, Math.floor(t.time / 1000));
-}
-
-console.log(`Seeded ${actions.length} agent actions and ${x402txs.length} x402 transactions`);
-db.close();
+main().catch(console.error);
