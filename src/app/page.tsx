@@ -20,10 +20,10 @@ const portfolioHistory = [
 ];
 
 const assetAllocation = [
-  { name: "USDC", pct: 45, color: "bg-blue-500", value: 467 },
-  { name: "WETH", pct: 25, color: "bg-violet-500", value: 259 },
-  { name: "OKB", pct: 15, color: "bg-amber-500", value: 156 },
-  { name: "Aave", pct: 15, color: "bg-emerald-500", value: 156 },
+  { name: "USDC", pct: 45, color: "bg-blue-400", value: 467 },
+  { name: "WETH", pct: 25, color: "bg-violet-400", value: 259 },
+  { name: "OKB", pct: 15, color: "bg-amber-400", value: 156 },
+  { name: "Aave", pct: 15, color: "bg-emerald-400", value: 156 },
 ];
 
 export default function DashboardPage() {
@@ -38,75 +38,74 @@ export default function DashboardPage() {
   const range = maxVal - minVal || 1;
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div>
-        <h1 className="text-xl font-semibold">Dashboard</h1>
-        <p className="text-sm text-muted-foreground">Autonomous agent performance on X Layer</p>
+        <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
+        <p className="text-sm text-muted-foreground mt-0.5">Autonomous agent performance on X Layer</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-        <StatCard title="Total Assets" value={formatUSD(1038)} change="+3.8%" changeType="positive" icon={Wallet} />
-        <StatCard title="Today P&L" value={formatUSD(data?.todayPnl ?? 0)} change={formatPercent(((data?.todayPnl ?? 0) / 1000) * 100)} changeType={(data?.todayPnl ?? 0) >= 0 ? "positive" : "negative"} icon={TrendingUp} />
-        <StatCard title="x402 Revenue" value={formatUSD(data?.x402Earnings ?? 0)} subtitle={`${data?.x402Calls ?? 0} calls`} icon={Zap} />
-        <StatCard title="DeFi Yield" value={formatUSD(6.52)} subtitle="APY 4.2%" icon={PiggyBank} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <StatCard title="Total Assets" value={formatUSD(1038)} change="+3.8%" changeType="positive" icon={Wallet} color="pink" />
+        <StatCard title="Today P&L" value={formatUSD(data?.todayPnl ?? 0)} change={formatPercent(((data?.todayPnl ?? 0) / 1000) * 100)} changeType={(data?.todayPnl ?? 0) >= 0 ? "positive" : "negative"} icon={TrendingUp} color="green" />
+        <StatCard title="x402 Revenue" value={formatUSD(data?.x402Earnings ?? 0)} subtitle={`${data?.x402Calls ?? 0} calls`} icon={Zap} color="purple" />
+        <StatCard title="DeFi Yield" value={formatUSD(6.52)} subtitle="APY 4.2%" icon={PiggyBank} color="blue" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <ActionFeed actions={data?.recentActions ?? []} />
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           {/* Chart */}
-          <div className="rounded-lg border border-border bg-card p-5">
+          <div className="rounded-2xl border border-border bg-white p-6">
             <div className="flex items-center justify-between mb-5">
-              <h3 className="text-sm font-medium">Portfolio Value (7D)</h3>
-              <span className="text-xs font-mono text-emerald-400 flex items-center gap-1">
+              <h3 className="text-sm font-semibold">Portfolio Value (7D)</h3>
+              <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full flex items-center gap-1">
                 <ArrowUpRight className="h-3 w-3" /> +5.9%
               </span>
             </div>
-
-            <div className="flex items-end gap-2 h-[140px] mb-2">
+            <div className="flex items-end gap-3 h-[140px] mb-2">
               {portfolioHistory.map((d) => {
                 const h = ((d.value - minVal) / range) * 100 + 15;
                 return (
-                  <div key={d.day} className="flex-1 flex flex-col items-center gap-1">
-                    <span className={`text-[10px] font-mono ${d.pnl >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                  <div key={d.day} className="flex-1 flex flex-col items-center gap-1.5">
+                    <span className={`text-[10px] font-mono font-medium ${d.pnl >= 0 ? "text-emerald-600" : "text-red-500"}`}>
                       {d.pnl >= 0 ? "+" : ""}{d.pnl}
                     </span>
                     <div
-                      className={`w-full rounded-sm ${d.pnl >= 0 ? "bg-emerald-500/25" : "bg-red-500/20"}`}
+                      className={`w-full rounded-md ${d.pnl >= 0 ? "bg-gradient-to-t from-emerald-200 to-emerald-100" : "bg-gradient-to-t from-red-200 to-red-100"}`}
                       style={{ height: `${h}%` }}
                     />
                   </div>
                 );
               })}
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               {portfolioHistory.map((d) => (
-                <div key={d.day} className="flex-1 text-center text-[10px] text-muted-foreground">{d.day}</div>
+                <div key={d.day} className="flex-1 text-center text-[10px] text-muted-foreground font-medium">{d.day}</div>
               ))}
             </div>
-            <div className="flex justify-between mt-3 pt-3 border-t border-border text-xs text-muted-foreground">
+            <div className="flex justify-between mt-4 pt-4 border-t border-border text-xs text-muted-foreground">
               <span className="font-mono">$980</span>
-              <span className="font-mono text-emerald-400">$1,038</span>
+              <span className="font-mono font-medium text-emerald-600">$1,038</span>
             </div>
           </div>
 
           {/* Allocation */}
-          <div className="rounded-lg border border-border bg-card p-5">
-            <h3 className="text-sm font-medium mb-4">Asset Allocation</h3>
-            <div className="flex h-2 rounded-full overflow-hidden mb-4 bg-secondary">
+          <div className="rounded-2xl border border-border bg-white p-6">
+            <h3 className="text-sm font-semibold mb-4">Asset Allocation</h3>
+            <div className="flex h-3 rounded-full overflow-hidden mb-5 bg-secondary">
               {assetAllocation.map((a) => (
-                <div key={a.name} className={`${a.color}`} style={{ width: `${a.pct}%` }} />
+                <div key={a.name} className={a.color} style={{ width: `${a.pct}%` }} />
               ))}
             </div>
-            <div className="grid grid-cols-2 gap-y-2 gap-x-6">
+            <div className="grid grid-cols-2 gap-y-3 gap-x-8">
               {assetAllocation.map((a) => (
-                <div key={a.name} className="flex items-center justify-between text-sm">
+                <div key={a.name} className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className={`w-2 h-2 rounded-full ${a.color}`} />
-                    <span className="text-muted-foreground">{a.name}</span>
+                    <div className={`w-2.5 h-2.5 rounded-full ${a.color}`} />
+                    <span className="text-sm text-muted-foreground">{a.name}</span>
                   </div>
-                  <span className="font-mono">${a.value}</span>
+                  <span className="text-sm font-mono font-medium">${a.value}</span>
                 </div>
               ))}
             </div>

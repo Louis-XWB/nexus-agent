@@ -12,6 +12,11 @@ const icons: Record<string, typeof ArrowRightLeft> = {
   SWAP: ArrowRightLeft, DEFI_DEPOSIT: PiggyBank, SKIP: ShieldX, x402_EARN: Coins, x402_PAY: Coins,
 };
 
+const colors: Record<string, string> = {
+  SWAP: "bg-blue-50 text-blue-600", DEFI_DEPOSIT: "bg-emerald-50 text-emerald-600",
+  SKIP: "bg-amber-50 text-amber-600", x402_EARN: "bg-violet-50 text-violet-600", x402_PAY: "bg-rose-50 text-rose-600",
+};
+
 function timeAgo(dateStr: string): string {
   const diff = Date.now() - new Date(dateStr).getTime();
   const mins = Math.floor(diff / 60000);
@@ -24,32 +29,34 @@ function timeAgo(dateStr: string): string {
 
 export function ActionFeed({ actions }: { actions: ActionItem[] }) {
   return (
-    <div className="rounded-lg border border-border bg-card">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-        <span className="text-sm font-medium">Recent Actions</span>
+    <div className="rounded-2xl border border-border bg-white">
+      <div className="flex items-center justify-between px-5 py-3.5 border-b border-border">
+        <span className="text-sm font-semibold">Recent Actions</span>
         <span className="text-xs text-muted-foreground">{actions.length} total</span>
       </div>
       <ScrollArea className="h-[440px]">
         <div className="divide-y divide-border">
           {actions.map((action) => {
             const Icon = icons[action.actionType] || ArrowRightLeft;
+            const color = colors[action.actionType] || "bg-gray-50 text-gray-600";
             return (
-              <div key={action.id} className="px-4 py-3 hover:bg-secondary/30">
-                <div className="flex items-center gap-2 mb-1">
-                  <Icon className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
-                  <Badge variant="outline" className={cn("text-[10px] h-[18px] px-1.5 font-mono",
-                    action.status === "success" && "text-emerald-400 border-emerald-400/30",
-                    action.status === "skipped" && "text-amber-400 border-amber-400/30",
-                  )}>{action.actionType}</Badge>
-                  {action.route && <span className="text-[10px] text-muted-foreground font-mono">{action.route}</span>}
-                  <span className="text-[10px] text-muted-foreground ml-auto">{timeAgo(action.createdAt)}</span>
+              <div key={action.id} className="px-5 py-3 hover:bg-secondary/30">
+                <div className="flex items-center gap-2.5 mb-1">
+                  <div className={cn("h-7 w-7 rounded-lg flex items-center justify-center", color)}>
+                    <Icon className="h-3.5 w-3.5" />
+                  </div>
+                  <span className="text-xs font-semibold">{action.actionType}</span>
+                  {action.route && (
+                    <Badge variant="secondary" className="text-[10px] h-[18px] font-mono">{action.route}</Badge>
+                  )}
+                  <span className="text-[11px] text-muted-foreground ml-auto">{timeAgo(action.createdAt)}</span>
                 </div>
-                <p className="text-xs text-muted-foreground leading-relaxed pl-5">{action.reason}</p>
+                <p className="text-xs text-muted-foreground leading-relaxed pl-9">{action.reason}</p>
                 {action.amount ? (
-                  <p className="text-[11px] font-mono text-foreground/70 pl-5 mt-0.5">
+                  <p className="text-[11px] font-mono text-foreground/60 pl-9 mt-0.5">
                     ${action.amount.toFixed(2)}
                     {action.confidence != null && (
-                      <span className={cn("ml-2", action.confidence >= 0.7 ? "text-emerald-400" : "text-amber-400")}>
+                      <span className={cn("ml-2", action.confidence >= 0.7 ? "text-emerald-600" : "text-amber-600")}>
                         {(action.confidence * 100).toFixed(0)}%
                       </span>
                     )}

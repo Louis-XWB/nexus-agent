@@ -24,17 +24,14 @@ export function ChatWindow() {
     const userMessage = input.trim();
     setInput(""); setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
     setIsLoading(true); setStreamingContent(""); setStreamingTools([]);
-
     try {
       const res = await fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: userMessage }) });
       const reader = res.body?.getReader(); if (!reader) return;
       const decoder = new TextDecoder();
       let accContent = ""; let accTools: { name: string; input: unknown }[] = [];
-
       while (true) {
         const { done, value } = await reader.read(); if (done) break;
-        const text = decoder.decode(value);
-        for (const line of text.split("\n\n")) {
+        for (const line of decoder.decode(value).split("\n\n")) {
           if (!line.startsWith("data: ")) continue;
           try {
             const data = JSON.parse(line.slice(6));
@@ -54,15 +51,15 @@ export function ChatWindow() {
         <div className="space-y-4 max-w-2xl mx-auto">
           {messages.length === 0 && (
             <div className="text-center py-20">
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary mb-4">
-                <Bot className="h-6 w-6 text-primary-foreground" />
+              <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-500 to-violet-500 mb-5">
+                <Bot className="h-7 w-7 text-white" />
               </div>
-              <h2 className="text-lg font-semibold mb-1">Chat with Nexus</h2>
-              <p className="text-sm text-muted-foreground mb-6">Ask about tokens, execute trades, check your portfolio</p>
+              <h2 className="text-xl font-semibold mb-1">Chat with Nexus</h2>
+              <p className="text-sm text-muted-foreground mb-8">Ask about tokens, execute trades, check your portfolio</p>
               <div className="flex flex-wrap gap-2 justify-center">
                 {["What tokens are trending?", "Check my portfolio", "What are whales buying?"].map((q) => (
                   <button key={q} onClick={() => setInput(q)}
-                    className="rounded-md border border-border bg-secondary/50 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary">
+                    className="rounded-full border border-border bg-white px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:border-foreground/20 hover:shadow-sm">
                     {q}
                   </button>
                 ))}
@@ -74,12 +71,11 @@ export function ChatWindow() {
           <div ref={scrollRef} />
         </div>
       </ScrollArea>
-
       <div className="border-t border-border p-4">
         <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="flex gap-2 max-w-2xl mx-auto">
-          <Input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Ask Nexus anything..." disabled={isLoading} className="flex-1" />
-          <Button type="submit" disabled={isLoading || !input.trim()} className="bg-primary hover:bg-primary/90">
-            <Send className="h-4 w-4" />
+          <Input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Ask Nexus anything..." disabled={isLoading} className="flex-1 rounded-full h-10 px-4" />
+          <Button type="submit" disabled={isLoading || !input.trim()} className="rounded-full h-10 w-10 p-0 bg-gradient-to-r from-pink-500 to-violet-500 hover:from-pink-600 hover:to-violet-600">
+            <Send className="h-4 w-4 text-white" />
           </Button>
         </form>
       </div>
