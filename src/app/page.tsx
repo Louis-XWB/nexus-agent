@@ -40,8 +40,8 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
-        <p className="text-sm text-muted-foreground mt-0.5">Autonomous agent performance on X Layer</p>
+        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+        <p className="text-[13px] text-muted-foreground mt-0.5">Autonomous agent performance on X Layer</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -56,23 +56,23 @@ export default function DashboardPage() {
 
         <div className="space-y-5">
           {/* Chart */}
-          <div className="rounded-2xl border border-border bg-white p-6">
-            <div className="flex items-center justify-between mb-5">
-              <h3 className="text-sm font-semibold">Portfolio Value (7D)</h3>
-              <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full flex items-center gap-1">
+          <div className="card-elevated p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-sm font-bold">Portfolio Value (7D)</h3>
+              <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full flex items-center gap-1 shadow-sm shadow-emerald-100">
                 <ArrowUpRight className="h-3 w-3" /> +5.9%
               </span>
             </div>
-            <div className="flex items-end gap-3 h-[140px] mb-2">
+            <div className="flex items-end gap-3 h-[150px] mb-3">
               {portfolioHistory.map((d) => {
                 const h = ((d.value - minVal) / range) * 100 + 15;
                 return (
                   <div key={d.day} className="flex-1 flex flex-col items-center gap-1.5">
-                    <span className={`text-[10px] font-mono font-medium ${d.pnl >= 0 ? "text-emerald-600" : "text-red-500"}`}>
+                    <span className={`text-[10px] font-mono font-semibold ${d.pnl >= 0 ? "text-emerald-600" : "text-red-500"}`}>
                       {d.pnl >= 0 ? "+" : ""}{d.pnl}
                     </span>
                     <div
-                      className={`w-full rounded-md ${d.pnl >= 0 ? "bg-gradient-to-t from-emerald-200 to-emerald-100" : "bg-gradient-to-t from-red-200 to-red-100"}`}
+                      className={`w-full rounded-lg transition-all hover:scale-105 ${d.pnl >= 0 ? "bg-gradient-to-t from-emerald-300 to-emerald-100" : "bg-gradient-to-t from-red-300 to-red-100"}`}
                       style={{ height: `${h}%` }}
                     />
                   </div>
@@ -81,31 +81,34 @@ export default function DashboardPage() {
             </div>
             <div className="flex gap-3">
               {portfolioHistory.map((d) => (
-                <div key={d.day} className="flex-1 text-center text-[10px] text-muted-foreground font-medium">{d.day}</div>
+                <div key={d.day} className="flex-1 text-center text-[10px] text-muted-foreground font-semibold">{d.day}</div>
               ))}
             </div>
-            <div className="flex justify-between mt-4 pt-4 border-t border-border text-xs text-muted-foreground">
-              <span className="font-mono">$980</span>
-              <span className="font-mono font-medium text-emerald-600">$1,038</span>
+            <div className="flex justify-between mt-4 pt-4 border-t border-black/[0.04] text-xs">
+              <span className="font-mono text-muted-foreground">$980</span>
+              <span className="font-mono font-bold text-emerald-600">$1,038</span>
             </div>
           </div>
 
           {/* Allocation */}
-          <div className="rounded-2xl border border-border bg-white p-6">
-            <h3 className="text-sm font-semibold mb-4">Asset Allocation</h3>
-            <div className="flex h-3 rounded-full overflow-hidden mb-5 bg-secondary">
+          <div className="card-elevated p-6">
+            <h3 className="text-sm font-bold mb-5">Asset Allocation</h3>
+            <div className="flex h-3 rounded-full overflow-hidden mb-5 bg-[#f0f0f5]">
               {assetAllocation.map((a) => (
-                <div key={a.name} className={a.color} style={{ width: `${a.pct}%` }} />
+                <div key={a.name} className={`${a.color} first:rounded-l-full last:rounded-r-full`} style={{ width: `${a.pct}%` }} />
               ))}
             </div>
-            <div className="grid grid-cols-2 gap-y-3 gap-x-8">
+            <div className="grid grid-cols-2 gap-3">
               {assetAllocation.map((a) => (
-                <div key={a.name} className="flex items-center justify-between">
+                <div key={a.name} className="card-inner flex items-center justify-between px-3.5 py-2.5">
                   <div className="flex items-center gap-2">
                     <div className={`w-2.5 h-2.5 rounded-full ${a.color}`} />
-                    <span className="text-sm text-muted-foreground">{a.name}</span>
+                    <span className="text-[13px] text-muted-foreground">{a.name}</span>
                   </div>
-                  <span className="text-sm font-mono font-medium">${a.value}</span>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-[13px] font-bold font-mono">${a.value}</span>
+                    <span className="text-[10px] text-muted-foreground">{a.pct}%</span>
+                  </div>
                 </div>
               ))}
             </div>
