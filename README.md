@@ -16,6 +16,12 @@ Nexus is an autonomous AI agent that operates a complete on-chain intelligence b
 
 ![Dashboard](public/screenshots/dashboard.png)
 
+![Chat — AI Trading Assistant](public/screenshots/chat.png)
+
+![Intelligence Market — x402 APIs](public/screenshots/intel.png)
+
+![Transaction History](public/screenshots/history.png)
+
 ## Why Nexus
 
 Traditional DeFi tools require users to manually monitor markets, compare prices across DEXes, assess token risks, and execute trades. Nexus automates this entire workflow with an AI agent that thinks, decides, and acts autonomously -- while giving users full transparency and control through a conversational interface.
