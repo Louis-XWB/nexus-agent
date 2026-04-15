@@ -6,7 +6,7 @@ Nexus is an autonomous AI agent that operates a complete on-chain intelligence b
 
 **Live App:** https://xlayer-two.vercel.app
 
-**Demo Video:** https://youtu.be/8oxvLUL-qmo
+**Demo Video:** https://youtu.be/LbPf5nxXXjw
 
 **Verified On-Chain:**
 - [NexusRegistry Contract](https://www.oklink.com/x-layer/address/0x3050BFe3a2fa1b4a8f47b1948DA7A0cB573e4B32) -- `0x3050BFe3a2fa1b4a8f47b1948DA7A0cB573e4B32`
