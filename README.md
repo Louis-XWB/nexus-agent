@@ -14,14 +14,6 @@ Nexus is an autonomous AI agent that operates a complete on-chain intelligence b
 
 ![Landing Page](public/screenshots/landing.png)
 
-![Dashboard](public/screenshots/dashboard.png)
-
-![Chat — AI Trading Assistant](public/screenshots/chat.png)
-
-![Intelligence Market — x402 APIs](public/screenshots/intel.png)
-
-![Transaction History](public/screenshots/history.png)
-
 ## Why Nexus
 
 Traditional DeFi tools require users to manually monitor markets, compare prices across DEXes, assess token risks, and execute trades. Nexus automates this entire workflow with an AI agent that thinks, decides, and acts autonomously -- while giving users full transparency and control through a conversational interface.
@@ -58,6 +50,8 @@ Traditional DeFi tools require users to manually monitor markets, compare prices
 - The agent uses 13 specialized tools (OKX OnchainOS + Uniswap) behind the scenes
 - Every tool call is visible in the UI -- you see exactly what the agent is doing and why
 
+![Chat — AI Trading Assistant](public/screenshots/chat.png)
+
 **Full-Stack Web Dashboard**
 - Real-time portfolio overview with P&L tracking
 - 7-day performance chart with daily breakdown
@@ -65,6 +59,8 @@ Traditional DeFi tools require users to manually monitor markets, compare prices
 - Live action feed showing every agent decision with reasoning
 - Transaction history with on-chain TX links
 - Intelligence marketplace with API documentation
+
+![Dashboard](public/screenshots/dashboard.png)
 
 ### Integration Depth
 
@@ -185,6 +181,8 @@ Nexus sells real-time on-chain intelligence via x402 micropayments -- no API key
 
 Nexus also **consumes** x402 services (agent-as-consumer), creating bidirectional x402 usage.
 
+![Intelligence Market — x402 APIs](public/screenshots/intel.png)
+
 ### Economic Loop
 
 ```
@@ -286,6 +284,8 @@ cd contracts && forge test -v  # Contract tests (10/10)
 | **Chat** (`/chat`) | Natural language interaction with streaming responses and tool calls |
 | **Intelligence** (`/intel`) | x402 API marketplace with docs, curl examples, live try-it |
 | **History** (`/history`) | Full transaction log with reasoning, routes, and on-chain TX links |
+
+![Transaction History](public/screenshots/history.png)
 
 ## X Layer Ecosystem Position
 
